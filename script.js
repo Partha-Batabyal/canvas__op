@@ -16,7 +16,6 @@ let isDrawing = false;
 let isErasing = false;
 let strokeColor = colorPicker.value;
 
-
 // Initialize canvas size
 window.addEventListener("load", () => {
   resizeCanvas();
@@ -29,7 +28,6 @@ const resizeCanvas = () => {
 };
 
 // Set canvas background color
-
 const setCanvasColor = () => {
   canvas.style.backgroundColor = colorcan.value;
 };
@@ -37,8 +35,24 @@ const setCanvasColor = () => {
 // Get client position relative to canvas
 const getClientPosition = (e) => {
   const rect = canvas.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
+  let x, y;
+  if (
+    e.type === "mousedown" ||
+    e.type === "mouseup" ||
+    e.type === "mousemove" ||
+    e.type === "mouseout"
+  ) {
+    x = e.clientX - rect.left;
+    y = e.clientY - rect.top;
+  } else if (
+    e.type === "touchstart" ||
+    e.type === "touchend" ||
+    e.type === "touchmove" ||
+    e.type === "touchcancel"
+  ) {
+    x = e.touches[0].clientX - rect.left;
+    y = e.touches[0].clientY - rect.top;
+  }
   return { x, y };
 };
 
@@ -75,7 +89,7 @@ const clearCanvas = () => {
 };
 
 // Toggle drawing mode (drawing or erasing)
-modeToggleBtn.textContent="Erasing Mode"
+modeToggleBtn.textContent = "Erasing Mode";
 const toggleDrawingMode = () => {
   isErasing = !isErasing;
   modeToggleBtn.textContent = isErasing ? "Drawing Mode" : "Erasing Mode";
@@ -92,8 +106,6 @@ const resetCanvas = () => {
 const toggleColorPicker = () => {
   colorcan.classList.toggle("hidden");
 };
-
-
 
 // Event listeners
 modeToggleBtn.addEventListener("click", toggleDrawingMode);
@@ -117,8 +129,13 @@ thicknessRange.addEventListener("input", (e) => {
 canvas.addEventListener("dblclick", resetCanvas);
 modeToggleBtn.addEventListener("dblclick", resetCanvas);
 
-// Double click to toggle color picker visibility
+// Tap to toggle color picker visibility (for mobile)
 allBtn.addEventListener("click", toggleColorPicker);
 
 // Change canvas color based on color picker input
 colorcan.addEventListener("input", setCanvasColor);
+
+// Handle canvas resize on window resize event
+window.addEventListener("resize", () => {
+  resizeCanvas();
+});
