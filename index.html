@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
     <title>_F a t t y P a i n t_</title>
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -11,34 +11,41 @@
     <div id="main">
       <div class="mainContent">
         <div class="canvas">
-          <input type="color" name="" id="color__can">
+          <input type="color" name="" id="color__can" value="#eeeeee" />
           <canvas></canvas>
         </div>
         <div class="allBtn">
-          <div class="btn__1">
-            <button></button>
+          <div class="onto">
+            <div class="btn__1">
+              <button></button>
+            </div>
+            <div class="btn__2">
+              <input type="color" name="" id="" value="#1a1a1a" />
+            </div>
+          </div>
 
+          <div class="thr">
+            <div class="btn__3">
+              <input
+                type="range"
+                name=""
+                id="rangevalue"
+                min="1"
+                max="10"
+                value="5"
+                oninput="output.value = rangevalue.value"
+              />
+              <output id="output">5</output>
+            </div>
           </div>
-          <div class="btn__2">
-            <input type="color" name="" id="" />
-          </div>
-          <div class="btn__3">
-            <input
-              type="range"
-              name=""
-              id="rangevalue"
-              min="1"
-              max="10"
-              value="5"
-              oninput="output.value = rangevalue.value"
-            />
-            <output id="output">5</output>
-          </div>
-          <div class="btn__4">
-            <button>Bg-Color</button>
-          </div>
-          <div class="btn__5">
-            <button>Save</button>
+
+          <div class="fou-fiv">
+            <div class="btn__4">
+              <button>Bg-Color</button>
+            </div>
+            <div class="btn__5">
+              <button>Save</button>
+            </div>
           </div>
         </div>
       </div>

@@ -16,6 +16,7 @@ let isColorPickerActive = false;
 
 window.addEventListener("load", () => {
   resizeCanvas();
+  setCanvasColor();
 });
 
 const resizeCanvas = () => {
@@ -51,7 +52,7 @@ const getClientPosition = (e) => {
 };
 
 const startDrawing = (e) => {
-  if (isColorPickerActive) return; // Don't start drawing if color picker is active
+  if (isColorPickerActive) return;
   e.preventDefault();
   isDrawing = true;
   const { x, y } = getClientPosition(e);
@@ -60,14 +61,13 @@ const startDrawing = (e) => {
 };
 
 const draw = (e) => {
-  if (isColorPickerActive || !isDrawing) return; // Don't draw if color picker is active or not in drawing mode
+  if (isColorPickerActive || !isDrawing) return;
   e.preventDefault();
   const { x, y } = getClientPosition(e);
 
-  // Apply line smoothing
-  ctx.lineJoin = "round"; // Round the corners of the line
-  ctx.lineCap = "round"; // Round the ends of the line
-  ctx.lineJoinSmithe = "smooth"; // Apply anti-aliasing to the line
+  ctx.lineJoin = "round";
+  ctx.lineCap = "round";
+  ctx.lineJoinSmithe = "smooth";
 
   ctx.lineTo(x, y);
   ctx.strokeStyle = isErasing ? canvas.style.backgroundColor : strokeColor;
@@ -95,7 +95,7 @@ const resetCanvas = () => {
   isErasing = false;
   modeToggleBtn.textContent = "Drawing Mode";
 };
-
+colorcan.classList.add("hidden");
 const toggleColorPicker = () => {
   colorcan.classList.toggle("hidden");
 };
@@ -128,11 +128,25 @@ window.addEventListener("resize", () => {
   resizeCanvas();
 });
 
+const saveCanvas = document.createElement("canvas");
+const saveCtx = saveCanvas.getContext("2d");
+
 const saveDrawing = () => {
   if (confirm("Are you sure you want to save the drawing?")) {
+    // *** Set the dimensions of the save canvas
+    saveCanvas.width = canvas.width;
+    saveCanvas.height = canvas.height;
+
+    // ***Fill the save canvas with the background color
+    saveCtx.fillStyle = colorcan.value;
+    saveCtx.fillRect(0, 0, saveCanvas.width, saveCanvas.height);
+
+    // ***Draw the current canvas content (drawing) on top of the background color
+    saveCtx.drawImage(canvas, 0, 0);
+
     const link = document.createElement("a");
-    link.href = canvas.toDataURL();
-    link.download = "myDrawing.png";
+    link.href = saveCanvas.toDataURL();
+    link.download = "_FattyPaint_.png";
     link.click();
   }
 };

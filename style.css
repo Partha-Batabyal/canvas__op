@@ -6,7 +6,8 @@
 body {
   width: 100%;
   height: 100%;
-  background-color: #1a1a1a;
+  background-color: #1f9a9480;
+  overflow: hidden;
 }
 #color__can {
   position: absolute;
@@ -50,9 +51,10 @@ body {
 }
 
 .canvas canvas {
-  width: 100%;
-  height: 100%;
-  background-color: #eee;
+  width: 98%;
+  height: 98%;
+  border: 4px solid #181515;
+  /* background-color: #1a1a1abc; */
 }
 
 .allBtn {
@@ -61,6 +63,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  gap: 8px;
+  background-color: #54d9fb3b;
+
+  /* background-color: red; */
 }
 .btn__1 {
   width: 100px;
@@ -96,6 +102,8 @@ body {
   border-radius: 10px;
   border: none;
   /* background-color: #1e657d; */
+  background-color: #54d9fb3b;
+
   color: #fff;
   appearance: none;
   -moz-appearance: none;
@@ -153,31 +161,100 @@ body {
   font-size: 1.2rem;
   cursor: pointer;
 }
+.onto {
+  display: flex;
+  width: 33.33%;
+  /* background-color: antiquewhite; */
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  flex-grow: 2;
+}
+.thr {
+  display: flex;
+  width: 33.33%;
+  /* background-color: antiquewhite; */
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  flex-grow: 2;
+  padding: 0 8px 0 8px;
+}
+
+.fou-fiv {
+  display: flex;
+  width: 33.33%;
+  /* background-color: antiquewhite; */
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  flex-grow: 2;
+}
 
 @media screen and (max-width: 600px) {
   .mainContent {
-    width: 95%;
+    width: 96%;
   }
   .allBtn {
-    width: 90%;
+    width: 97%;
     height: 15%;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     flex-wrap: wrap;
+
     overflow: scroll;
-    padding: 14px;
-    gap: 20px;
+
+    padding: 15px 10px 15px 10px;
+    gap: 10px;
   }
   .addBtn::-webkit-scrollbar {
     display: none;
   }
-  .btn__1 {
-    width: 100px;
-    height: 50px;
+  .onto {
+    width: 100%;
   }
-  .btn__2 {
-    width: 100px;
-    height: 50px;
+  .thr {
+    width: 100%;
+  }
+  .fou-fiv {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 601px) and (max-width: 800px) {
+  .mainContent {
+    width: 97%;
+  }
+  .allBtn {
+    width: 97%;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+
+    overflow: scroll;
+
+    padding: 15px 10px 15px 10px;
+    gap: 10px;
+  }
+  .addBtn::-webkit-scrollbar {
+    display: none;
+  }
+  .onto {
+    width: 100%;
+  }
+  .thr {
+    width: 100%;
+  }
+  .fou-fiv {
+    width: 100%;
   }
 }
