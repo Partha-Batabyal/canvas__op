@@ -1,4 +1,3 @@
-// DOM elements
 const main = document.querySelector("#main");
 const canvas = document.querySelector(".canvas canvas");
 const modeToggleBtn = document.querySelector(".btn__1 button");
@@ -8,31 +7,26 @@ const colorPicker = document.querySelector(".btn__2 input");
 const colorcan = document.querySelector("#color__can");
 const allBtn = document.querySelector(".btn__4 button");
 
-// Canvas context
 const ctx = canvas.getContext("2d");
 
-// Drawing variables
 let isDrawing = false;
 let isErasing = false;
 let strokeColor = colorPicker.value;
+let isColorPickerActive = false;
 
-// Initialize canvas size
 window.addEventListener("load", () => {
   resizeCanvas();
 });
 
-// Resize canvas to match container size
 const resizeCanvas = () => {
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
 };
 
-// Set canvas background color
 const setCanvasColor = () => {
   canvas.style.backgroundColor = colorcan.value;
 };
 
-// Get client position relative to canvas
 const getClientPosition = (e) => {
   const rect = canvas.getBoundingClientRect();
   let x, y;
@@ -56,8 +50,8 @@ const getClientPosition = (e) => {
   return { x, y };
 };
 
-// Start drawing
 const startDrawing = (e) => {
+  if (isColorPickerActive) return; // Don't start drawing if color picker is active
   e.preventDefault();
   isDrawing = true;
   const { x, y } = getClientPosition(e);
@@ -65,49 +59,44 @@ const startDrawing = (e) => {
   ctx.moveTo(x, y);
 };
 
-// Draw on canvas
 const draw = (e) => {
   e.preventDefault();
-  if (!isDrawing) return;
-
   const { x, y } = getClientPosition(e);
+
+  ctx.lineJoin = "round";
+  ctx.lineCap = "round";
+
   ctx.lineTo(x, y);
-  ctx.strokeStyle = isErasing ? "white" : strokeColor;
+  ctx.strokeStyle = isErasing ? canvas.style.backgroundColor : strokeColor;
   ctx.lineWidth = isErasing ? 20 : thicknessRange.value;
   ctx.stroke();
 };
 
-// Stop drawing
 const stopDrawing = (e) => {
   e.preventDefault();
   isDrawing = false;
 };
 
-// Clear canvas
 const clearCanvas = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 };
 
-// Toggle drawing mode (drawing or erasing)
-modeToggleBtn.textContent = "Erasing Mode";
+modeToggleBtn.textContent = "Drawing Mode";
 const toggleDrawingMode = () => {
   isErasing = !isErasing;
-  modeToggleBtn.textContent = isErasing ? "Drawing Mode" : "Erasing Mode";
+  modeToggleBtn.textContent = isErasing ? "Erasing Mode" : "Drawing Mode";
 };
 
-// Reset canvas and button state
 const resetCanvas = () => {
   clearCanvas();
   isErasing = false;
   modeToggleBtn.textContent = "Drawing Mode";
 };
 
-// Toggle color picker visibility
 const toggleColorPicker = () => {
   colorcan.classList.toggle("hidden");
 };
 
-// Event listeners
 modeToggleBtn.addEventListener("click", toggleDrawingMode);
 canvas.addEventListener("mousedown", startDrawing);
 canvas.addEventListener("mousemove", draw);
@@ -125,17 +114,13 @@ thicknessRange.addEventListener("input", (e) => {
   thicknessOutput.textContent = e.target.value;
 });
 
-// Double click events to reset canvas
 canvas.addEventListener("dblclick", resetCanvas);
 modeToggleBtn.addEventListener("dblclick", resetCanvas);
 
-// Tap to toggle color picker visibility (for mobile)
 allBtn.addEventListener("click", toggleColorPicker);
 
-// Change canvas color based on color picker input
 colorcan.addEventListener("input", setCanvasColor);
 
-// Handle canvas resize on window resize event
 window.addEventListener("resize", () => {
   resizeCanvas();
 });
